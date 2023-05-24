@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Redirect Teams Web</title>
+
+		<script
+      id="teams-sdk-script"
+			src="https://res.cdn.office.net/teams-js/2.9.1/js/MicrosoftTeams.min.js"
+			integrity="sha384-xnsUQ1tUqsrutBJl0vuf4/hufzLFWW8ZhGnhItfpQ0/BtWgM2uw6YT6BQ5YaKBSM"
+			crossorigin="anonymous"
+      async
+		></script>
+	</head>
+	<body>
+		Redirecting
+	</body>
+
+	<script>
+		async function run () {
+			try {
+				const params = new Proxy(new URLSearchParams(window.location.search), {
+					get: (searchParams, prop) => searchParams.get(prop),
+				});
+				if (typeof params.url !== "string") {
+          location.href = "/build.html";
+					return;
+				}
+
+				const newWin = window.open(params.url, "_blank");
+
+				if (!newWin || newWin.closed || typeof newWin.closed == "undefined") {
+          if (typeof params.urlOnPopupError === "string") {
+            location.href = params.urlOnPopupError;
+            return;
+          }
+          throw new Error(`Pop-up blocked, <a href="${params.url}" target="_blank">click here to open</a>`);
+				}
+
+				const microsoftTeams = await new Promise((resolve, reject) => {
+          setTimeout(() => {
+            reject("Teams SDK Unable to load");
+          }, 10000);
+          if (window.microsoftTeams) {
+            resolve(window.microsoftTeams);
+          } else {
+            document.getElementById("teams-sdk-script").onload = () => {
+              resolve(window.microsoftTeams)
+            }
+          }
+        });
+				try {
+					await window.microsoftTeams.app.initialize();
+					await window.microsoftTeams.pages.backStack.navigateBack();
+				} catch (error) {
+					console.error(error);
+					window.history.back();
+				}
+			} catch (error) {
+				document.body.innerHTML = error.message;
+			}
+		};
+    run();
+	</script>
+</html>
