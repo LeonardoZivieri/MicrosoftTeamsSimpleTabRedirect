@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teams simple redirect app</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-zinc-100 text-black dark:bg-zinc-900 dark:text-white h-screen font-sans flex flex-col place-items-center justify-center"
+  >
+    <div
+      id="app"
+      class="container max-w-md max-w-80 mx-8 p-2 bg-zinc-200 dark:bg-zinc-950 border dark:border-zinc-400 rounded-lg text-center"
+    >
+      <h1 class="text-2xl mb-2">Teams Simple Redirect Creator {{ message }}</h1>
+
+      <form class="p-4 flex flex-col gap-2" @submit.prevent="create">
+        <div class="w-full text-left">
+          <label for="id-input" class="text-xs font-thin">Id</label>
+          <input
+            id="id-input"
+            name="id"
+            v-model="id"
+            type="text"
+            class="w-full p-1 bg-zinc-200 dark:bg-zinc-900 focus:ring-1 focus:ring-violet-900"
+          />
+        </div>
+
+        <div class="w-full text-left">
+          <label for="name-input" class="text-xs font-thin">App Name</label>
+          <input
+            id="name-input"
+            name="name"
+            v-model="name"
+            type="text"
+            class="w-full p-1 bg-zinc-200 dark:bg-zinc-900 focus:ring-1 focus:ring-violet-900"
+            placeholder="Example"
+          />
+        </div>
+
+        <div class="w-full text-left">
+          <label for="url-input" class="text-xs font-thin">Redirect URL</label>
+          <input
+            id="url-input"
+            name="url"
+            v-model="url"
+            type="text"
+            class="w-full p-1 bg-zinc-200 dark:bg-zinc-900 focus:ring-1 focus:ring-violet-900"
+            placeholder="https://example.com"
+          />
+        </div>
+
+        <div class="flex gap-2">
+          <div class="basis-1/2 text-left">
+            <label for="image-color-input" class="text-xs font-thin">
+              App Color Image
+            </label>
+            <image-input
+              id="image-color-input"
+              v-model="colorIcon"
+              class="mt-2"
+            />
+          </div>
+
+          <div class="basis-1/2 text-left">
+            <label for="image-outline-input" class="text-xs font-thin">
+              App Outline Image
+            </label>
+            <image-input
+              id="image-outline-input"
+              v-model="outlineIcon"
+              class="mt-2"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full p-1 mt-2 bg-violet-400 bg-violet-300 dark:bg-violet-900 hover:dark:bg-violet-800 rounded-md"
+        >
+          Create
+        </button>
+      </form>
+    </div>
+
+    <div class="pt-4">
+      <a
+        href="https://github.com/LeonardoZivieri/MicrosoftTeamsSimpleTabRedirect"
+        title="Project GitHub"
+        target="_blank"
+        rel="noopener"
+        noreferrer
+      >
+        <img
+          class="w-10 h-10 rounded-full"
+          src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+          alt="GitHub"
+        />
+      </a>
+    </div>
+  </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"
+    integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script type="module" src="/build.js"></script>
+</html>
